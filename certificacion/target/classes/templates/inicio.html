@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head  data-th-replace="parts/head :: cabecera(~{::title}, _)">
+<meta charset="UTF-8">
+<title>Inicio</title>
+</head>
+<body>
+	<nav data-th-replace="parts/menu :: menu"></nav>
+
+<h1 align="center">Listado de Cursos disponibles</h1>
+		<hr/>
+	
+
+		<div class="my-3 p-3 rounded shadow-sm d-flex justify-content-center " >
+		<div class="row container">
+			<div class="col-12 col-sm-10 col-md-6 col-lg-5 col-xl-4 col-xxl-4" data-th-each="curso : ${cursos}">
+				<div class="card-header border bg-dark text-white rounded">
+				<p class="card-text" data-th-text="${curso.titulo}"></p></div>
+				<div class="card text-white bg-dark mb-3">
+				  <img data-th-src="@{/imagen/{id}(id=${curso.id})}" class="card-img-middle" height="300" style="margin:30px;">
+				  <div class="card-body " align="center">
+				    <h2 class="card-title" data-th-text="${curso.titulo}"></h2>
+				    <p class="card-text" data-th-text="${curso.descripcion}"></p>
+				    <p class="fs-6 text-light mb-0"><a class="bi bi-people-fill"></a> Cupos: 
+					<span class="card-text text-primary fs-6" data-th-text="${curso.cupos}"></span></p>
+					<p class="fs-6 text-light mb-0"><a class="bi bi-calendar-check"></a> Inicio: 
+					<span class="card-text text-primary fs-6" data-th-text="${curso.postulacionesFechaInicio}"></span></p>
+					<p class="fs-6 text-light mb-2"><a class="bi bi-calendar-x"></a> Termino: 
+					<span class="card-text text-primary fs-6" data-th-text="${curso.postulacionesFechaTermino}"></span></p>
+					
+					<input type="hidden"  />
+				     <a class="btn btn-primary bg-gradient" data-sec-authorize="hasAuthority('POSTULANTE')" data-th-href="@{/postulacion/registrar/{id}(id=${curso.id})}">Postular</a>
+				    
+		</div>
+				  
+				  </div>
+				</div>
+				<div class="col-12 col-sm-10 col-md-5 col-lg-4 col-xl-4 col-xxl-3" data-th-if="${cursos.empty}"></div>
+			<div class="container text-center my-5 py-5">
+				<img data-th-if="${cursos.empty}" alt="empty" data-th-src="@{/img/empty.png}" height="150" width="150"><br/>
+				<span data-th-if="${cursos.empty}"> No hay cursos disponibles </span>
+			</div>
+		</div>
+		</div>
+	</div>  
+	
+<div data-th-replace="parts/scripts :: scripts"></div>
+	<div data-th-replace="parts/footer :: pie"></div>
+</body>
+</html>
